@@ -1,0 +1,19 @@
+backend:
+  name: github
+  repo: luferIPCA/landfeelings
+  branch: main
+
+media_folder: images
+public_folder: images
+
+collections:
+  - name: "conteudos"
+    label: "Conteúdos"
+    folder: "_conteudos"
+    create: true
+    fields:
+      - { label: "Título", name: "titulo", widget: "string" }
+      - { label: "Secção", name: "secao", widget: "select", options: ["atividades", "alojamento", "gastronomia", "artesanato", "contactos"] }
+      - { label: "Texto", name: "texto", widget: "markdown" }
+      - { label: "Foto", name: "foto", widget: "image", required: false }
+      - { label: "Preço", name: "preco", widget: "string", required: false }

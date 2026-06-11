@@ -6,13 +6,67 @@ media_folder: images
 public_folder: images
 
 collections:
-  - name: "conteudos"
-    label: "Conteúdos"
-    folder: "_conteudos"
+
+  - name: "noticias"
+    label: "Notícias & Novidades"
+    folder: "_conteudos/noticias"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Data", name: "date", widget: "datetime" }
+      - { label: "Resumo", name: "resumo", widget: "text" }
+      - { label: "Imagem", name: "imagem", widget: "image", required: false }
+      - { label: "Conteúdo", name: "body", widget: "markdown" }
+
+  - name: "destaques"
+    label: "Produtos em Destaque"
+    folder: "_conteudos/destaques"
     create: true
     fields:
-      - { label: "Título", name: "titulo", widget: "string" }
-      - { label: "Secção", name: "secao", widget: "select", options: ["atividades", "alojamento", "gastronomia", "artesanato", "contactos"] }
-      - { label: "Texto", name: "texto", widget: "markdown" }
-      - { label: "Foto", name: "foto", widget: "image", required: false }
+      - { label: "ID do Produto", name: "produto_id", widget: "string" }
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Descrição curta", name: "descricao", widget: "text" }
+      - { label: "Imagem", name: "imagem", widget: "image" }
+      - { label: "Destaque na homepage", name: "homepage", widget: "boolean", default: true }
+
+  - name: "atividades"
+    label: "Atividades"
+    folder: "_conteudos/atividades"
+    create: true
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Descrição", name: "body", widget: "markdown" }
+      - { label: "Imagem", name: "imagem", widget: "image", required: false }
+      - { label: "Duração", name: "duracao", widget: "string", required: false }
       - { label: "Preço", name: "preco", widget: "string", required: false }
+      - { label: "Ativa", name: "ativa", widget: "boolean", default: true }
+
+  - name: "alojamentos"
+    label: "Alojamentos"
+    folder: "_conteudos/alojamentos"
+    create: true
+    fields:
+      - { label: "Nome", name: "title", widget: "string" }
+      - { label: "Descrição", name: "body", widget: "markdown" }
+      - { label: "Imagem", name: "imagem", widget: "image", required: false }
+      - { label: "Capacidade", name: "capacidade", widget: "string", required: false }
+      - { label: "Preço por noite", name: "preco", widget: "string", required: false }
+      - { label: "Disponível", name: "disponivel", widget: "boolean", default: true }
+
+  - name: "paginas"
+    label: "Textos do Site"
+    files:
+      - label: "Homepage — Introdução"
+        name: "homepage"
+        file: "_conteudos/paginas/homepage.md"
+        fields:
+          - { label: "Título principal", name: "titulo", widget: "string" }
+          - { label: "Subtítulo", name: "subtitulo", widget: "string" }
+          - { label: "Texto de apresentação", name: "body", widget: "markdown" }
+      - label: "Sobre nós"
+        name: "sobre"
+        file: "_conteudos/paginas/sobre.md"
+        fields:
+          - { label: "Título", name: "titulo", widget: "string" }
+          - { label: "Conteúdo", name: "body", widget: "markdown" }

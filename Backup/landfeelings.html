@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LandFeelings — Gerês</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   CONFIGURAÇÃO DE CORES — editar aqui para mudar o tema
+   ============================================================ */
+:root {
+  --cor-fundo:         #F8F7F5;   /* fundo geral */
+  --cor-fundo-card:    #FFFFFF;   /* fundo dos cards */
+  --cor-texto:         #1A1A2E;   /* texto principal — azul muito escuro */
+  --cor-texto-suave:   #6B7280;   /* texto secundário */
+  --cor-destaque:      #E8352A;   /* vermelho do logótipo */
+  --cor-destaque-claro:#FDF0EF;   /* fundo suave do vermelho */
+  --cor-azul:          #1B4B9C;   /* azul cobalt do logótipo */
+  --cor-azul-claro:    #EBF0FA;   /* fundo suave do azul */
+  --cor-borda:         #E5E7EB;   /* bordas */
+  --cor-nav-bg:        #1A1A2E;   /* fundo da navegação — azul escuro */
+  --cor-nav-texto:     #F8F7F5;   /* texto da navegação */
+  --cor-tag:           #1B4B9C;   /* azul para tags */
+  --cor-tag-fundo:     #EBF0FA;   /* fundo das tags */
+  --font-titulo:       'Cormorant Garamond', Georgia, serif;
+  --font-corpo:        'Jost', sans-serif;
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-corpo);
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-size: 16px;
+  line-height: 1.7;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: var(--cor-destaque); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ============================================================
+   NAVEGAÇÃO
+   ============================================================ */
+nav {
+  background: var(--cor-nav-bg);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2.5rem;
+  height: 56px;
+}
+.nav-logo {
+  font-family: var(--font-titulo);
+  font-size: 22px;
+  color: var(--cor-nav-texto);
+  letter-spacing: 1px;
+}
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+.nav-links a {
+  color: var(--cor-nav-texto);
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  opacity: 0.75;
+  transition: opacity 0.2s;
+}
+.nav-links a:hover { opacity: 1; text-decoration: none; }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  text-align: center;
+  padding: 5rem 2rem 4rem;
+  border-bottom: 1px solid var(--cor-borda);
+  max-width: 720px;
+  margin: 0 auto;
+}
+.hero-eyebrow {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--cor-texto-suave);
+  margin-bottom: 1.5rem;
+}
+.hero-titulo {
+  font-family: var(--font-titulo);
+  font-size: clamp(48px, 8vw, 80px);
+  font-weight: 400;
+  color: var(--cor-destaque);
+  line-height: 1;
+  margin-bottom: 2rem;
+}
+.hero-citacao {
+  font-family: var(--font-titulo);
+  font-style: italic;
+  font-size: 20px;
+  color: var(--cor-texto-suave);
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+.hero-autor {
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: var(--cor-tag);
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   SERVIÇOS — barra de navegação por secção
+   ============================================================ */
+/* tabs de navegação removidas */
+
+/* ============================================================
+   SECÇÕES DE CONTEÚDO
+   ============================================================ */
+.secao { display: none; padding: 3rem 2rem; max-width: 960px; margin: 0 auto; }
+.secao.ativa { display: block; }
+
+.secao-titulo {
+  font-family: var(--font-titulo);
+  font-size: 36px;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+.secao-descricao {
+  font-size: 15px;
+  color: var(--cor-texto-suave);
+  margin-bottom: 2.5rem;
+  max-width: 600px;
+}
+
+/* ============================================================
+   CARDS DE CONTEÚDO
+   ============================================================ */
+.conteudos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Card completo (com foto) */
+.card {
+  background: var(--cor-fundo-card);
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+.card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+.card-corpo {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 1.25rem;
+}
+.card-corpo-conteudo { flex: 1; }
+.card-rodape {
+  margin-top: auto;
+  padding-top: 0.75rem;
+}
+.card-preco-wrapper {
+  min-height: 3rem;
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 0.5rem;
+}
+
+.card-foto {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  background: var(--cor-destaque-claro);
+}
+.card-foto-placeholder {
+  width: 100%;
+  height: 200px;
+  background: var(--cor-azul-claro);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cor-azul);
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+
+.card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 0.75rem; }
+.tag {
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: var(--cor-azul-claro);
+  color: var(--cor-azul);
+  font-weight: 500;
+}
+.tag-destaque {
+  background: var(--cor-destaque-claro);
+  color: var(--cor-destaque);
+}
+
+.card-titulo {
+  font-family: var(--font-titulo);
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+  color: var(--cor-texto);
+}
+.card-data {
+  font-size: 12px;
+  color: var(--cor-texto-suave);
+  margin-bottom: 0.75rem;
+}
+.card-texto {
+  font-size: 14px;
+  color: var(--cor-texto-suave);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+.card-texto p { margin-bottom: 0.5rem; }
+.card-texto ul { padding-left: 1.2rem; margin-bottom: 0.5rem; }
+.card-autor {
+  font-size: 12px;
+  color: var(--cor-tag);
+  border-top: 1px solid var(--cor-borda);
+  padding-top: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+/* Card loja (produto) */
+.card-loja .card-preco {
+  font-family: var(--font-titulo);
+  font-size: 24px;
+  color: var(--cor-destaque);
+}
+.btn-loja {
+  display: inline-block;
+  background: var(--cor-destaque);
+  color: white;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 8px 20px;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.btn-loja:hover { opacity: 0.85; text-decoration: none; }
+
+/* Sub-grupos no Artesanato */
+.subgrupos { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 2rem; }
+.subgrupo-btn {
+  padding: 6px 16px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 99px;
+  font-size: 13px;
+  cursor: pointer;
+  background: none;
+  color: var(--cor-texto-suave);
+  font-family: var(--font-corpo);
+  transition: all 0.2s;
+}
+.subgrupo-btn:hover, .subgrupo-btn.ativo {
+  background: var(--cor-azul);
+  color: white;
+  border-color: var(--cor-azul);
+}
+
+/* ============================================================
+   CATÁLOGO
+   ============================================================ */
+.ano-btn {
+  padding: 5px 14px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 99px;
+  font-size: 12px;
+  cursor: pointer;
+  background: none;
+  color: var(--cor-texto-suave);
+  font-family: var(--font-corpo);
+  transition: all 0.2s;
+}
+.ano-btn:hover, .ano-btn.ativo {
+  background: var(--cor-azul);
+  color: white;
+  border-color: var(--cor-azul);
+}
+.card-catalogo .card-foto {
+  height: 260px;
+  object-fit: contain;
+  background: #f5f5f0;
+  padding: 1rem;
+}
+.btn-encomendar {
+  display: inline-block;
+  background: var(--cor-destaque);
+  color: white;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 8px 20px;
+  border-radius: 4px;
+  margin-top: 0.75rem;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  text-decoration: none;
+}
+.btn-encomendar:hover { opacity: 0.85; text-decoration: none; }
+
+/* Seleção de peças no catálogo */
+.card-catalogo {
+  position: relative;
+}
+.card-selecao {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+  width: 22px;
+  height: 22px;
+  accent-color: var(--cor-destaque);
+  cursor: pointer;
+  transform: scale(1.3);
+}
+.card-catalogo.selecionado {
+  border-color: var(--cor-destaque);
+  box-shadow: 0 0 0 2px var(--cor-destaque);
+}
+.barra-encomenda {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--cor-nav-bg);
+  color: white;
+  padding: 1rem 2rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  z-index: 200;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
+}
+.barra-encomenda.visivel { display: flex; }
+.barra-encomenda-info { font-size: 14px; }
+.barra-encomenda-info strong { color: #E8352A; }
+.barra-encomenda-btns { display: flex; gap: 10px; }
+.btn-enviar-encomenda {
+  background: var(--cor-destaque);
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: var(--font-corpo);
+  letter-spacing: 0.5px;
+}
+.btn-limpar-selecao {
+  background: transparent;
+  color: rgba(255,255,255,0.6);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: var(--font-corpo);
+}
+
+/* ============================================================
+   RODAPÉ
+   ============================================================ */
+footer {
+  text-align: center;
+  padding: 2.5rem 2rem;
+  border-top: 1px solid var(--cor-borda);
+  font-size: 12px;
+  color: var(--cor-texto-suave);
+  letter-spacing: 0.5px;
+  margin-top: 3rem;
+}
+footer strong {
+  font-family: var(--font-titulo);
+  font-size: 16px;
+  color: var(--cor-texto);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAVEGAÇÃO
+     ============================================================ -->
+<nav>
+  <a href="#" onclick="mostrarSecao('atividades')" style="display:flex;align-items:center;">
+    <img src="images/logotipo.jpg" alt="LandFeelings" style="height:40px;width:auto;display:block;">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#" onclick="mostrarSecao('atividades')">Atividades</a></li>
+    <li><a href="#" onclick="mostrarSecao('alojamento')">Alojamento</a></li>
+    <li><a href="#" onclick="mostrarSecao('gastronomia')">Gastronomia</a></li>
+    <li><a href="#" onclick="mostrarSecao('artesanato')">Artesanato</a></li>
+    <li><a href="#" onclick="mostrarSecao('contactos')">Contactos</a></li>
+  </ul>
+</nav>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<div class="hero">
+  <p class="hero-eyebrow">Gerês · Parque Nacional Peneda-Gerês · Reserva da Biosfera UNESCO</p>
+  <h1 class="hero-titulo">LandFeelings</h1>
+  <p class="hero-citacao">"Há sítios do mundo que são como certas existências humanas: tudo se conjuga para que nada falte à sua grandeza e perfeição. Este Gerês é um deles."</p>
+  <p class="hero-autor">— Miguel Torga</p>
+</div>
+
+<!-- ============================================================
+     SECÇÃO: ATIVIDADES
+     ============================================================ -->
+<div id="sec-atividades" class="secao ativa">
+  <h2 class="secao-titulo">Atividades</h2>
+  <p class="secao-descricao">Eco-turismo, desporto de aventura, apicultura e educação ambiental no coração do Parque Nacional da Peneda e Gerês.</p>
+  <div class="conteudos" id="lista-atividades"></div>
+</div>
+
+<!-- ============================================================
+     SECÇÃO: ALOJAMENTO
+     ============================================================ -->
+<div id="sec-alojamento" class="secao">
+  <h2 class="secao-titulo">Alojamento</h2>
+  <p class="secao-descricao">Espaços únicos de aldeia, branda e montanha. Autenticidade, conforto e natureza em cada detalhe.</p>
+  <div class="conteudos" id="lista-alojamento"></div>
+</div>
+
+<!-- ============================================================
+     SECÇÃO: GASTRONOMIA
+     ============================================================ -->
+<div id="sec-gastronomia" class="secao">
+  <h2 class="secao-titulo">Gastronomia</h2>
+  <p class="secao-descricao">Receitas regionais, produtos do campo e refeições confecionadas com ingredientes locais.</p>
+  <div class="conteudos" id="lista-gastronomia"></div>
+</div>
+
+<!-- ============================================================
+     SECÇÃO: ARTESANATO
+     ============================================================ -->
+<div id="sec-artesanato" class="secao">
+  <h2 class="secao-titulo">Artesanato</h2>
+  <p class="secao-descricao">Peças únicas feitas à mão. Escolhe uma categoria para explorar e aceder à loja.</p>
+  <div class="subgrupos" id="subgrupos-artesanato"></div>
+  <div class="conteudos" id="lista-artesanato"></div>
+
+  <!-- Catálogos por ano -->
+  <div id="area-catalogos" style="margin-top: 2.5rem;">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem;">
+      <p class="secao-titulo" style="margin:0; padding:0;">Catálogos</p>
+      <div id="anos-nav" style="display:flex; gap:8px; flex-wrap:wrap;"></div>
+    </div>
+    <div class="conteudos" id="lista-catalogo"></div>
+    <p id="catalogo-loading" style="font-size:13px; color:var(--cor-texto-suave); padding:1rem 0;">A carregar catálogo...</p>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECÇÃO: CONTACTOS
+     ============================================================ -->
+<div id="sec-contactos" class="secao">
+  <h2 class="secao-titulo">Contactos</h2>
+  <p class="secao-descricao">Estamos no coração do Gerês. Fala connosco para planear a tua visita.</p>
+  <div class="conteudos" id="lista-contactos"></div>
+</div>
+
+<!-- ============================================================
+     RODAPÉ
+     ============================================================ -->
+<footer>
+  <img src="images/logotipo.jpg" alt="LandFeelings" style="height:48px;width:auto;margin:0 auto 1rem;display:block;opacity:0.7;">
+  Parque Nacional da Peneda e Gerês · Reserva da Biosfera UNESCO<br>
+  &copy; 2026 LandFeelings. Todos os direitos reservados.
+</footer>
+
+
+<script>
+/* ============================================================
+   CONTEÚDOS — EDITAR AQUI PARA ADICIONAR/ALTERAR ENTRADAS
+   ============================================================
+
+   Cada entrada é um objeto com os seguintes campos:
+     secao    — "atividades" | "alojamento" | "gastronomia" | "artesanato" | "contactos"
+     subgrupo — (só artesanato) ex: "Cerâmica" | "Cestaria" | "Bordados" | ...
+     titulo   — título do card
+     data     — (opcional) ex: "Maio 2026" ou "12 de Abril de 2026"
+     foto     — (opcional) URL da imagem
+     texto    — texto ou HTML livre (pode incluir <ul>, <p>, <strong>, etc.)
+     autor    — (opcional) ex: "Ana Silva"
+     tags     — (opcional) array de strings ex: ["Trekking", "Família"]
+     loja     — (opcional) objeto { preco: "12,00 €", link: "https://..." }
+
+   PARA ADICIONAR UMA NOVA ENTRADA:
+   Copia um bloco { ... }, cola-o antes do último ], ajusta os campos.
+   ============================================================ */
+
+const CONTEUDOS = [
+
+  /* ── ATIVIDADES ─────────────────────────────────────────── */
+  {
+    secao: "atividades",
+    titulo: "Trekking no Gerês",
+    data: "Disponível todo o ano",
+    foto: "images/trekking.jpg",  /* coloca a imagem em images/ */
+    tags: ["Trekking", "Natureza"],
+    texto: `
+      <p>Percursos pedestres guiados pelos trilhos mais emblemáticos do Parque Nacional da Peneda e Gerês.</p>
+      <ul>
+        <li>Trilhos de curta e longa distância</li>
+        <li>Guia especializado incluído</li>
+        <li>Adequado para todos os níveis</li>
+      </ul>
+    `,
+    autor: "Equipa LandFeelings"
+  },
+  {
+    secao: "atividades",
+    titulo: "Apicultura — visita às colmeias",
+    data: "Primavera e Verão",
+    foto: "",
+    tags: ["Apicultura", "Educativo"],
+    texto: `
+      <p>Uma experiência única de contacto com as abelhas e o ciclo da produção de mel no Gerês.</p>
+      <ul>
+        <li>Visita guiada às colmeias</li>
+        <li>Participação na cresta (época própria)</li>
+        <li>Degustação de mel e produtos apícolas</li>
+        <li>Aluguer anual de colmeias disponível</li>
+      </ul>
+    `,
+    autor: "Equipa LandFeelings"
+  },
+  {
+    secao: "atividades",
+    titulo: "Cicloturismo e geocaching",
+    data: "Disponível todo o ano",
+    foto: "",
+    tags: ["Cicloturismo", "Aventura"],
+    texto: `
+      <p>Explora os caminhos rurais e florestais do Alto Minho em bicicleta, com rotas adaptadas a diferentes perfis.</p>
+      <p>O geocaching permite descobrir pontos escondidos da região de forma lúdica e interativa.</p>
+    `,
+    autor: ""
+  },
+  {
+    secao: "atividades",
+    titulo: "Workshop de olaria",
+    data: "Sob marcação",
+    foto: "",
+    tags: ["Workshop", "Cerâmica"],
+    texto: `
+      <p>Aprende as técnicas tradicionais de olaria com artesãos locais. Cria a tua própria peça e leva-a para casa.</p>
+      <p>Adequado para adultos e crianças a partir dos 8 anos.</p>
+    `,
+    autor: ""
+  },
+
+  /* ── ALOJAMENTO ─────────────────────────────────────────── */
+  {
+    secao: "alojamento",
+    titulo: "Casa do Melro",
+    data: "Disponível para reserva",
+    foto: "",
+    tags: ["Aldeia", "4 quartos"],
+    texto: `
+      <p>Espaço acolhedor com quatro quartos — dois triplos e dois de casal.</p>
+      <ul>
+        <li>Cozinha regional totalmente equipada com lareira</li>
+        <li>Sala de estar com lareira e sofá-cama</li>
+        <li>Grande tanque em pedra como piscina, rodeado de oliveiras</li>
+        <li>Roupa de cama e banho incluída</li>
+        <li>Pequeno-almoço de boas-vindas oferecido</li>
+      </ul>
+    `,
+    autor: ""
+  },
+  {
+    secao: "alojamento",
+    titulo: "Branda e alojamento de montanha",
+    data: "Disponível para reserva",
+    foto: "",
+    tags: ["Montanha", "Natureza"],
+    texto: `
+      <p>Espaços particulares que permitem desfrutar da natureza em toda a sua plenitude.</p>
+      <ul>
+        <li>Visita orientada às colmeias</li>
+        <li>Degustação de produtos locais: mel, compotas, frutos vermelhos</li>
+        <li>Refeições confecionadas com produtos do campo</li>
+        <li>Espaço para dormidas e refeições</li>
+      </ul>
+    `,
+    autor: ""
+  },
+
+  /* ── GASTRONOMIA ─────────────────────────────────────────── */
+  {
+    secao: "gastronomia",
+    titulo: "Cozinha regional do Minho",
+    data: "",
+    foto: "",
+    tags: ["Regional", "Tradicional"],
+    texto: `
+      <p>Pratos confecionados com ingredientes caseiros, bom vinho verde e receitas que mantêm viva a tradição minhota.</p>
+      <ul>
+        <li>Cabrito assado</li>
+        <li>Rojões à moda do Minho</li>
+        <li>Massa à lavrador</li>
+        <li>Sopa da pedra</li>
+      </ul>
+      <p>Servidos sobre rústicas mesas de pedra ou sobre manta, com a paisagem do Gerês como pano de fundo.</p>
+    `,
+    autor: ""
+  },
+  {
+    secao: "gastronomia",
+    titulo: "Mel e compotas artesanais",
+    data: "",
+    foto: "",
+    tags: ["Produtos locais", "Artesanal"],
+    texto: `
+      <p>Mel multifloral, de urze e de eucalipto, produzido numa das zonas mais privilegiadas do país.</p>
+      <p><strong>Linha tradicional:</strong> Abóbora, morango, tomate, figo.</p>
+      <p><strong>Linha gourmet:</strong> Amora e framboesa, ananás e maçã, manga e banana, pétalas de rosa.</p>
+    `,
+    autor: ""
+  },
+
+  /* ── ARTESANATO ─────────────────────────────────────────── */
+  {
+    secao: "artesanato",
+    subgrupo: "Cerâmica",
+    titulo: "Mulherzinhas em barro branco",
+    data: "2026",
+    foto: "",
+    tags: ["Cerâmica", "Feito à mão"],
+    texto: `
+      <p>Peças de pequena dimensão que representam a mulher minhota, feitas à mão em barro branco.</p>
+      <p>Pintadas a acrílico e tinta cera, elaboradas com esmero e bom gosto.</p>
+    `,
+    autor: "Ateliê LandFeelings",
+    loja: { preco: "18,00 €", link: "#" }
+  },
+  {
+    secao: "artesanato",
+    subgrupo: "Cerâmica",
+    titulo: "Peças decorativas e figurado",
+    data: "2026",
+    foto: "",
+    tags: ["Cerâmica", "Decoração"],
+    texto: `
+      <p>Peças decorativas inspiradas nas formas e tradições do Alto Minho. Cada peça é única.</p>
+    `,
+    autor: "Ateliê LandFeelings",
+    loja: { preco: "24,00 €", link: "#" }
+  },
+  {
+    secao: "artesanato",
+    subgrupo: "Bordados",
+    titulo: "Toalhas em linho bordadas",
+    data: "Por encomenda",
+    foto: "",
+    tags: ["Bordados", "Linho"],
+    texto: `
+      <p>Trabalhos realizados por encomenda em linho caseiro e linho industrial.</p>
+      <ul>
+        <li>Baínhas abertas, bordado a crivo e ponto cheio</li>
+        <li>Toalhas, cortinas, naperons, jogos de quarto</li>
+        <li>Medidas à escolha do cliente</li>
+      </ul>
+    `,
+    autor: "Ateliê LandFeelings",
+    loja: { preco: "Sob consulta", link: "#" }
+  },
+  {
+    secao: "artesanato",
+    subgrupo: "Bolachas",
+    titulo: "Bolachas artesanais",
+    data: "Disponível",
+    foto: "",
+    tags: ["Bolachas", "Artesanal"],
+    texto: `
+      <p>Confecionadas artesanalmente, crocantes e estaladiças — um mimo para oferecer ou para desfrutar com um chá.</p>
+      <ul>
+        <li>Bolachas de aveia</li>
+        <li>Bolachas de café e canela</li>
+        <li>Bolachas de canela e erva-doce</li>
+      </ul>
+    `,
+    autor: "",
+    loja: { preco: "6,50 €", link: "#" }
+  },
+
+  /* ── CONTACTOS ─────────────────────────────────────────── */
+  {
+    secao: "contactos",
+    titulo: "Como chegar",
+    data: "",
+    foto: "",
+    tags: [],
+    texto: `
+      <p>Estamos localizados no Parque Nacional da Peneda e Gerês, Alto Minho.</p>
+      <p><strong>Morada:</strong> A definir</p>
+      <p><strong>Email:</strong> <a href="mailto:info@landfeelings.com">info@landfeelings.com</a></p>
+      <p><strong>Telefone:</strong> A definir</p>
+    `,
+    autor: ""
+  }
+
+]; /* ← fim do array CONTEUDOS */
+
+
+/* ============================================================
+   MOTOR — não é necessário editar abaixo desta linha
+   ============================================================ */
+
+function criarCard(item) {
+  const temLoja = item.loja && item.loja.preco;
+  const tags = (item.tags || []).map(t => `<span class="tag">${t}</span>`).join('');
+  const foto = item.foto
+    ? `<img class="card-foto" src="${item.foto}" alt="${item.titulo}">`
+    : `<div class="card-foto-placeholder">sem imagem</div>`;
+  const data  = item.data  ? `<p class="card-data">${item.data}</p>` : '';
+  const autor = item.autor ? `<p class="card-autor">Por ${item.autor}</p>` : '';
+  const loja  = temLoja
+    ? `<div class="card-preco-wrapper"><p class="card-preco">${item.loja.preco}</p></div>
+       <a class="btn-loja" href="${item.loja.link}">Encomendar</a>`
+    : '';
+
+  return `
+    <div class="card ${temLoja ? 'card-loja' : ''}">
+      ${foto}
+      <div class="card-corpo">
+        <div class="card-corpo-conteudo">
+          ${tags ? `<div class="card-tags">${tags}</div>` : ''}
+          <h3 class="card-titulo">${item.titulo}</h3>
+          ${data}
+          <div class="card-texto">${item.texto}</div>
+        </div>
+        <div class="card-rodape">
+          ${loja}
+          ${autor}
+        </div>
+      </div>
+    </div>`;
+}
+
+function mostrarSecao(secao) {
+  document.querySelectorAll('.secao').forEach(s => s.classList.remove('ativa'));
+  document.getElementById('sec-' + secao)?.classList.add('ativa');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderArtesanato(subgrupoAtivo) {
+  const todos = CONTEUDOS.filter(c => c.secao === 'artesanato');
+  const subgrupos = [...new Set(todos.map(c => c.subgrupo).filter(Boolean))];
+  const btnContainer = document.getElementById('subgrupos-artesanato');
+  const listaContainer = document.getElementById('lista-artesanato');
+
+  btnContainer.innerHTML = `<button class="subgrupo-btn ${!subgrupoAtivo ? 'ativo' : ''}" onclick="renderArtesanato('')">Todos</button>`
+    + subgrupos.map(s =>
+        `<button class="subgrupo-btn ${subgrupoAtivo === s ? 'ativo' : ''}" onclick="renderArtesanato('${s}')">${s}</button>`
+      ).join('');
+
+  const filtrados = subgrupoAtivo ? todos.filter(c => c.subgrupo === subgrupoAtivo) : todos;
+  listaContainer.innerHTML = filtrados.map(criarCard).join('');
+}
+
+function init() {
+  ['atividades', 'alojamento', 'gastronomia', 'contactos'].forEach(secao => {
+    const lista = document.getElementById('lista-' + secao);
+    if (lista) {
+      lista.innerHTML = CONTEUDOS
+        .filter(c => c.secao === secao)
+        .map(criarCard).join('');
+    }
+  });
+  renderArtesanato('');
+}
+
+document.addEventListener('DOMContentLoaded', init);
+
+/* ============================================================
+   CATÁLOGOS — carregamento automático por ano
+   ============================================================ */
+
+const EMAIL_ENCOMENDA = 'info@landfeelings.com';
+const ANOS_CATALOGOS = ['2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026'];
+let pecasSelecionadas = {};
+
+function nomeParaTitulo(f) {
+  return f.replace(/\.[^.]+$/, '').replace(/[_-]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+}
+
+function atualizarBarraEncomenda() {
+  const barra = document.getElementById('barra-encomenda');
+  const count = Object.keys(pecasSelecionadas).length;
+  if (!count) { barra.classList.remove('visivel'); return; }
+  barra.classList.add('visivel');
+  document.getElementById('barra-count').textContent = count + ' pe\u00e7a' + (count !== 1 ? 's' : '') + ' selecionada' + (count !== 1 ? 's' : '');
+}
+
+function toggleSelecao(chave, titulo, ano, cb) {
+  const card = cb.closest('.card-catalogo');
+  if (cb.checked) { pecasSelecionadas[chave] = {titulo, ano}; card.classList.add('selecionado'); }
+  else { delete pecasSelecionadas[chave]; card.classList.remove('selecionado'); }
+  atualizarBarraEncomenda();
+}
+
+function limparSelecao() {
+  pecasSelecionadas = {};
+  document.querySelectorAll('.card-selecao').forEach(cb => cb.checked = false);
+  document.querySelectorAll('.card-catalogo').forEach(c => c.classList.remove('selecionado'));
+  atualizarBarraEncomenda();
+}
+
+function enviarEncomenda() {
+  const pecas = Object.values(pecasSelecionadas);
+  if (!pecas.length) return;
+  const lista = pecas.map(p => '  - ' + p.titulo + ' (Cat\u00e1logo ' + p.ano + ')').join('\n');
+  const assunto = encodeURIComponent('Encomenda LandFeelings \u2014 ' + pecas.length + ' pe\u00e7a' + (pecas.length !== 1 ? 's' : ''));
+  const corpo = encodeURIComponent('Ol\u00e1,\n\nGostaria de encomendar:\n\n' + lista + '\n\nAguardo resposta.\n\nObrigado.');
+  window.location.href = 'mailto:' + EMAIL_ENCOMENDA + '?subject=' + assunto + '&body=' + corpo;
+}
+
+function criarCardCatalogo(peca, ano) {
+  const titulo = peca.titulo || nomeParaTitulo(peca.ficheiro);
+  const imgSrc = 'images/Catalogos/' + ano + '/' + peca.ficheiro;
+  const chave = (ano + '/' + peca.ficheiro).replace(/'/g, '');
+  const tit = titulo.replace(/'/g, '');
+  const data = peca.data || ano;
+  return '<div class="card card-catalogo">' +
+    '<input type="checkbox" class="card-selecao" title="Selecionar" onchange="toggleSelecao(\'' + chave + '\',\'' + tit + '\',\'' + ano + '\',this)">' +
+    '<img class="card-foto" src="' + imgSrc + '" alt="' + titulo + '" onerror="this.style.display=\'none\'">' +
+    '<div class="card-corpo"><div>' +
+    '<div class="card-tags"><span class="tag">' + data + '</span></div>' +
+    '<h3 class="card-titulo">' + titulo + '</h3>' +
+    (peca.descricao ? '<div class="card-texto"><p>' + peca.descricao + '</p></div>' : '') +
+    '</div><div class="card-rodape">' +
+    (peca.autor ? '<p class="card-autor">Por ' + peca.autor + '</p>' : '') +
+    '</div></div></div>';
+}
+
+async function carregarCatalogo(ano) {
+  const lista = document.getElementById('lista-catalogo');
+  const loading = document.getElementById('catalogo-loading');
+  lista.innerHTML = ''; loading.style.display = 'block';
+  loading.textContent = 'A carregar cat\u00e1logo ' + ano + '...';
+  limparSelecao();
+  document.querySelectorAll('.ano-btn').forEach(b => b.classList.toggle('ativo', b.textContent === ano));
+  try {
+    const res = await fetch('images/Catalogos/' + ano + '/index.json');
+    if (!res.ok) throw new Error();
+    const pecas = await res.json();
+    loading.style.display = 'none';
+    lista.innerHTML = pecas.length ? pecas.map(p => criarCardCatalogo(p, ano)).join('') :
+      '<p style="color:var(--cor-texto-suave);font-size:13px;">Sem pe\u00e7as.</p>';
+  } catch(e) {
+    loading.style.display = 'none';
+    lista.innerHTML = '<p style="color:var(--cor-texto-suave);font-size:13px;">Cat\u00e1logo ' + ano + ' n\u00e3o dispon\u00edvel.</p>';
+  }
+}
+
+async function iniciarCatalogos() {
+  const nav = document.getElementById('anos-nav');
+  if (!nav || nav.dataset.iniciado) return;
+  nav.dataset.iniciado = '1';
+  const anos = [];
+  for (const ano of ANOS_CATALOGOS) {
+    try { const r = await fetch('images/Catalogos/' + ano + '/index.json', {method:'HEAD'}); if (r.ok) anos.push(ano); } catch {}
+  }
+  if (!anos.length) { document.getElementById('area-catalogos').style.display = 'none'; return; }
+  nav.innerHTML = anos.map(a => '<button class="ano-btn" onclick="carregarCatalogo(\'' + a + '\')">' + a + '</button>').join('');
+  carregarCatalogo(anos[anos.length - 1]);
+}
+
+const _orig = mostrarSecao;
+mostrarSecao = function(s) { _orig(s); if (s === 'artesanato') iniciarCatalogos(); };
+if (document.getElementById('sec-artesanato') && document.getElementById('sec-artesanato').classList.contains('ativa')) iniciarCatalogos();
+</script>
+<!-- ── BARRA DE ENCOMENDA FLUTUANTE ── -->
+<div id="barra-encomenda" class="barra-encomenda">
+  <div class="barra-encomenda-info">
+    ✓ <strong id="barra-count">0 peças selecionadas</strong> — prontas para encomendar
+  </div>
+  <div class="barra-encomenda-btns">
+    <button class="btn-limpar-selecao" onclick="limparSelecao()">Limpar</button>
+    <button class="btn-enviar-encomenda" onclick="enviarEncomenda()">✉ Enviar encomenda</button>
+  </div>
+</div>
+
+</body>
+</html>

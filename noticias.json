@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2026-06-12-noticia-q",
+    "titulo": "Noticia 1",
+    "data": "2026-06-12T23:14:00.000+01:00",
+    "data_formatada": "12 de junho de 2026",
+    "resumo": "Resumo",
+    "imagem": "",
+    "conteudo": "Conteúdo"
+  },
+  {
+    "id": "2026-06-12-noticia-1",
+    "titulo": "Noticia 1",
+    "data": "2026-06-12T09:47:00.000+01:00",
+    "data_formatada": "12 de junho de 2026",
+    "resumo": "Resumo da notícia",
+    "imagem": "/images/logotipo.jpg",
+    "conteudo": "Conteudo da noticia"
+  }
+]

@@ -565,7 +565,6 @@ footer strong {
     <li><a href="#" onclick="mostrarSecao('alojamento')">Alojamento</a></li>
     <li><a href="#" onclick="mostrarSecao('gastronomia')">Gastronomia</a></li>
     <li><a href="#" onclick="mostrarSecao('artesanato')">Artesanato</a></li>
-    <li><a href="#" onclick="mostrarSecao('noticias')">Notícias</a></li>
     <li><a href="#" onclick="mostrarSecao('contactos')">Contactos</a></li>
   </ul>
 </nav>
@@ -625,15 +624,6 @@ footer strong {
     <div class="conteudos" id="lista-catalogo"></div>
     <p id="catalogo-loading" style="font-size:13px; color:var(--cor-texto-suave); padding:1rem 0;">A carregar catálogo...</p>
   </div>
-</div>
-
-<!-- ============================================================
-     SECÇÃO: NOTÍCIAS
-     ============================================================ -->
-<div id="sec-noticias" class="secao">
-  <h2 class="secao-titulo">Notícias</h2>
-  <p class="secao-descricao">Novidades e acontecimentos da LandFeelings.</p>
-  <div class="conteudos" id="lista-noticias"></div>
 </div>
 
 <!-- ============================================================
@@ -958,34 +948,7 @@ function init() {
   renderArtesanato('');
 }
 
-document.addEventListener('DOMContentLoaded', () => { init(); carregarNoticias(); });
-
-async function carregarNoticias() {
-  const lista = document.getElementById('lista-noticias');
-  if (!lista) return;
-  try {
-    const res = await fetch('data/noticias.json');
-    const noticias = await res.json();
-    if (!noticias.length) {
-      lista.innerHTML = '<p style="color:var(--cor-texto-suave)">Sem notícias publicadas.</p>';
-      return;
-    }
-    lista.innerHTML = noticias.map(n => `
-      <div class="card">
-        ${n.imagem ? `<img class="card-foto" src="${n.imagem}" alt="${n.titulo}">` : '<div class="card-foto-placeholder">Sem imagem</div>'}
-        <div class="card-corpo">
-          <div class="card-corpo-conteudo">
-            <p style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--cor-texto-suave);margin-bottom:0.5rem;">${n.data_formatada}</p>
-            <h3 style="font-family:var(--font-titulo);font-size:22px;font-weight:400;margin-bottom:0.75rem;">${n.titulo}</h3>
-            <p style="font-size:14px;color:var(--cor-texto-suave);">${n.resumo}</p>
-          </div>
-        </div>
-      </div>
-    `).join('');
-  } catch(e) {
-    lista.innerHTML = '<p style="color:var(--cor-texto-suave)">Erro ao carregar notícias.</p>';
-  }
-}
+document.addEventListener('DOMContentLoaded', init);
 
 /* ============================================================
    CATÁLOGOS — carregamento automático por ano
